@@ -7,7 +7,7 @@ import LAME
 import os.log
 
 
-public enum LameBitrateMode {
+public enum LameBitrateMode: Sendable {
     case variable(LameVbrMode)
     case constant(Int32)
     
@@ -22,7 +22,7 @@ public enum LameBitrateMode {
 }
 
 
-public enum LameVbrMode: UInt32 {
+public enum LameVbrMode: UInt32, Sendable {
     case off = 0
     case rh = 2
     case average = 3

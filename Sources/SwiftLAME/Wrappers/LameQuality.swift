@@ -5,7 +5,7 @@
 import Foundation
 
 
-public enum LameQuality: Int32 {
+public enum LameQuality: Int32, Sendable {
     case best = 0
     case nearBest = 2
     case standard = 5

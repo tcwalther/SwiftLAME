@@ -5,7 +5,7 @@
 import Foundation
 
 
-public struct LameConfiguration {
+public struct LameConfiguration: Sendable {
     
     // MARK: Internal
     

@@ -3,7 +3,7 @@ import AVFAudio
 import LAME
 
 
-public struct SwiftLameEncoder {
+public struct SwiftLameEncoder: Sendable {
     
     // MARK: Private
     
@@ -11,26 +11,28 @@ public struct SwiftLameEncoder {
     private let destinationUrl: URL
     private let frameCount: AVAudioFrameCount = 1024 * 8
     private let progress: Progress
-    private let sourceAudioFile: AVAudioFile
+    private let sourceUrl: URL
     
     // MARK: Lifecycle
     
     public init(sourceUrl: URL, configuration: LameConfiguration, destinationUrl: URL, progress: Progress = Progress()) throws {
+        _ = try AVAudioFile(forReading: sourceUrl)
+        self.sourceUrl = sourceUrl
         self.configuration = configuration
         self.destinationUrl = destinationUrl
         self.progress = progress
-        self.sourceAudioFile = try AVAudioFile(forReading: sourceUrl)
     }
     
     // MARK: Encoding
     
     public func encode(priority: TaskPriority = .medium) async throws {
-        try await Task(priority: priority) {
+        try await Task(priority: priority) { [self] in
             try _encode()
         }.value
     }
     
     private func _encode() throws {
+        let sourceAudioFile = try AVAudioFile(forReading: sourceUrl)
         let audioFormat = sourceAudioFile.processingFormat
         
         guard let sourceAudioBuffer = AVAudioPCMBuffer(pcmFormat: audioFormat, frameCapacity: frameCount) else {

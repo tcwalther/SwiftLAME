@@ -5,7 +5,7 @@
 import Foundation
 
 
-public enum LameSampleRate {
+public enum LameSampleRate: Sendable {
     case `default`
     case custom(Int32)
     
