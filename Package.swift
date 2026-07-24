@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 6.2
 
 import PackageDescription
 
@@ -27,7 +27,9 @@ let package = Package(
             publicHeadersPath: "include",
             cSettings: [
                 .define("HAVE_CONFIG_H"),
-                .unsafeFlags(["-w", "-Xanalyzer", "-analyzer-disable-all-checks"])
+                .disableWarning("absolute-value"),
+                .disableWarning("shift-negative-value"),
+                .disableWarning("tautological-pointer-compare")
             ]
         ),
         
