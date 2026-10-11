@@ -31,6 +31,7 @@ let lameEncoder = try SwiftLameEncoder(
         quality: .mp3Best
     ),
     destinationUrl: URL("file:///path/to/destination/file.wav"),
+    timeRange: 12.5...60, // optional, in seconds; encodes the whole file if omitted
     progress: progress // optional
 )
 try await lameEncoder.encode(priority: .userInitiated)
